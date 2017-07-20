@@ -1,0 +1,14 @@
+{
+    "name": "uselocker/interkassa",
+    "description": "sorted tree structure",
+    "type": "project",
+    "require": {
+        "phpunit/phpunit": "^6.2"
+    },
+    "authors": [
+        {
+            "name": "Roman Yurchenko",
+            "email": "uselocker@gmail.com"
+        }
+    ]
+}
