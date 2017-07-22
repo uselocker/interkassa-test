@@ -12,52 +12,54 @@ final class SheetTest extends TestCase
     /**
      * @var Sheet
      */
-    private $sheet;
+    private static $sheet;
 
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    public static function setUpBeforeClass()
     {
-        $this->sheet = new Sheet();
+        self::$sheet = new Sheet();
 
-        $this->sheet->add(1);
-        $this->sheet->add(2);
-        $this->sheet->add(3);
-        $this->sheet->add(4);
-        $this->sheet->add('string');
+        self::$sheet->add(1);
+        self::$sheet->add(2);
+        self::$sheet->add(3);
+        self::$sheet->add(4);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function setUpAfterClass()
+    {
+        self::$sheet = null;
     }
 
     public function testAdd()
     {
         $element = 'test1Add';
-        $this->sheet->add($element);
-        $this->assertTrue($this->sheet->contains($element));
+        self::$sheet->add($element);
+        $this->assertTrue(self::$sheet->contains($element));
     }
 
     public function testContains()
     {
-        $this->assertTrue($this->sheet->contains(3));
-        $this->assertFalse($this->sheet->contains(333));
+        $this->assertTrue(self::$sheet->contains(3));
+        $this->assertFalse(self::$sheet->contains(333));
+    }
+
+    /**
+     * @depends testAdd
+     */
+    public function testSize()
+    {
+        $this->assertTrue(self::$sheet->size() === 5);
+        $this->assertFalse(self::$sheet->size() === 10);
     }
 
     public function testDelete()
     {
         // todo after delete implementation
         $this->assertTrue(true);
-    }
-
-    public function testSize()
-    {
-        $this->assertTrue($this->sheet->size() === 5);
-        $this->assertFalse($this->sheet->size() === 10);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        $this->sheet = null;
     }
 }

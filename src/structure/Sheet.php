@@ -2,7 +2,7 @@
 
 namespace structure;
 
-class Sheet implements DataStructureInterface
+final class Sheet implements DataStructureInterface
 {
     /**
      * @var Sheet
@@ -15,11 +15,17 @@ class Sheet implements DataStructureInterface
     private $value;
 
     /**
+     * @var integer
+     */
+    private static $size = 0;
+
+    /**
      * @param mixed|null $value
      */
     public function __construct($value = null)
     {
         $this->value = $value;
+        ++self::$size;
     }
 
     /**
@@ -28,7 +34,9 @@ class Sheet implements DataStructureInterface
      */
     public function add($element)
     {
-        if ($this->tail) {
+        if (is_null($this->value)) {
+            $this->value = $element;
+        } elseif ($this->tail) {
             $this->tail->add($element);
         } else {
             $this->tail = new Sheet($element);
@@ -59,6 +67,7 @@ class Sheet implements DataStructureInterface
     public function delete($element)
     {
         // TODO: Implement delete() method.
+        --self::$size;
     }
 
     /**
@@ -66,13 +75,7 @@ class Sheet implements DataStructureInterface
      */
     public function size()
     {
-        if ($this->tail) {
-            $size = $this->tail->size()+1;
-        } else {
-            $size = 0;
-        }
-
-        return $size;
+        return self::$size;
     }
 
     /**
